@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { Component, useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Topbar from "./components/Topbar";
@@ -11,6 +12,38 @@ import TopicPage from "./pages/TopicPage";
 import Search from "./pages/Search";
 import PhaseView from "./pages/PhaseView";
 import NotFound from "./pages/NotFound";
+
+class ErrorBoundary extends Component<{ children: ReactNode }, { err: boolean }> {
+  state = { err: false };
+  static getDerivedStateFromError() {
+    return { err: true };
+  }
+  render() {
+    if (this.state.err) {
+      return (
+        <div style={{ minHeight: "100vh", display: "grid", placeItems: "center", padding: 24, textAlign: "center" }}>
+          <div>
+            <h2 style={{ marginBottom: 10 }}>Something went wrong</h2>
+            <p style={{ color: "#94a3b8", marginBottom: 18 }}>
+              The app crashed while loading. Tap below to try again.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              style={{
+                padding: "11px 26px", borderRadius: 12, border: "none",
+                background: "linear-gradient(135deg, #8b5cf6, #a855f7)",
+                color: "#fff", fontWeight: 600, fontSize: 14,
+              }}
+            >
+              Reload
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 function ScrollTop() {
   const { pathname } = useLocation();
@@ -58,7 +91,9 @@ function Shell() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Shell />
+      <ErrorBoundary>
+        <Shell />
+      </ErrorBoundary>
     </BrowserRouter>
   );
 }
