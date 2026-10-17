@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useI18n } from "../i18n";
-import { categories } from "../data/categories";
+import { categories, catName, catDesc } from "../data/categories";
 import Icon from "../components/Icon";
 
 const popular = [
@@ -18,7 +18,7 @@ const sims = [
 ];
 
 export default function Home() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
 
@@ -82,8 +82,8 @@ export default function Home() {
             style={{ animationDelay: `${i * 0.05}s` }}
           >
             <div className="c-icon"><Icon name={c.icon} /></div>
-            <h3>{c.name.bn}</h3>
-            <p>{c.desc.bn}</p>
+            <h3>{catName(c, lang)}</h3>
+            <p>{catDesc(c, lang)}</p>
             <div className="c-foot">
               <span className="c-count">{t("topics_count").replace("{n}", String(c.subs.length))}</span>
               <Icon name="arrow" size={15} />
@@ -105,8 +105,8 @@ export default function Home() {
             style={{ animationDelay: `${i * 0.05}s` }}
           >
             <div className="c-icon"><Icon name={p.icon} /></div>
-            <h3>{p.bn}</h3>
-            <p>{p.en} — {p.d}</p>
+            <h3>{p.en}</h3>
+            <p>{p.d}</p>
           </Link>
         ))}
       </div>
