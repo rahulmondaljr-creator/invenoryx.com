@@ -169,14 +169,14 @@ type Ctx = {
 };
 
 const I18nContext = createContext<Ctx>({
-  lang: "bn",
+  lang: "en",
   setLang: () => {},
   t: (k) => k,
 });
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(
-    () => (localStorage.getItem("ew-lang") as Lang) || "bn"
+    () => (localStorage.getItem("ew-lang") as Lang) || "en"
   );
   const setLang = (l: Lang) => {
     setLangState(l);
