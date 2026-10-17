@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../i18n";
-import { categories } from "../data/categories";
+import { categories, catName, catDesc } from "../data/categories";
 import Icon from "../components/Icon";
 
 export default function Categories() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   return (
     <div>
       <div className="page-head reveal">
@@ -13,10 +13,15 @@ export default function Categories() {
       </div>
       <div className="grid cats">
         {categories.map((c, i) => (
-          <Link to={"/category/" + c.id} className="card reveal" key={c.id} style={{ animationDelay: `${(i % 8) * 0.04}s` }}>
+          <Link
+            to={"/category/" + c.id}
+            className="card reveal"
+            key={c.id}
+            style={{ animationDelay: `${(i % 8) * 0.04}s` }}
+          >
             <div className="c-icon"><Icon name={c.icon} /></div>
-            <h3>{c.name.bn}</h3>
-            <p>{c.desc.bn}</p>
+            <h3>{catName(c, lang)}</h3>
+            <p>{catDesc(c, lang)}</p>
             <div className="c-foot">
               <span className="c-count">{t("topics_count").replace("{n}", String(c.subs.length))}</span>
               <Icon name="arrow" size={15} />
