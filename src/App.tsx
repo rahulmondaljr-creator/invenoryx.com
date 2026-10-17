@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Categories from "./pages/Categories";
 import CategoryPage from "./pages/CategoryPage";
+import TopicPage from "./pages/TopicPage";
 import Search from "./pages/Search";
 import PhaseView from "./pages/PhaseView";
 import NotFound from "./pages/NotFound";
@@ -43,6 +44,7 @@ function Shell() {
             <Route path="/register" element={<Register />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/category/:slug" element={<CategoryPage />} />
+            <Route path="/topic/:slug" element={<TopicPage />} />
             <Route path="/search" element={<Search />} />
             <Route path="/p/:key" element={<PhaseView />} />
             <Route path="*" element={<NotFound />} />
