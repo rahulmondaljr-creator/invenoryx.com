@@ -39,7 +39,7 @@ export default function Home() {
           <div className="hero-chips">
             <span className="chip">৩০ {t("sec_categories")}</span>
             <span className="chip">বাংলা · English · हिन्दी</span>
-            <span className="chip">ফেজভিত্তিক বিল্ড</span>
+            <span className="chip">{t("chip_phases")}</span>
           </div>
           <form
             className="search-bar"
