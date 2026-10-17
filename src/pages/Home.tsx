@@ -43,10 +43,20 @@ export default function Home() {
           </div>
           <form
             className="search-bar"
-            onSubmit={(e) => { e.preventDefault(); navigate("/search?q=" + encodeURIComponent(q)); }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              navigate("/search?q=" + encodeURIComponent(q));
+            }}
           >
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("home_search_ph")} aria-label={t("search_ph")} />
-            <button className="btn btn-primary" type="submit"><Icon name="search" size={16} /></button>
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder={t("home_search_ph")}
+              aria-label={t("search_ph")}
+            />
+            <button className="btn btn-primary" type="submit">
+              <Icon name="search" size={16} />
+            </button>
           </form>
         </div>
         <div className="orb-wrap" aria-hidden="true">
@@ -65,7 +75,12 @@ export default function Home() {
       </div>
       <div className="grid cats">
         {categories.slice(0, 8).map((c, i) => (
-          <Link to={"/category/" + c.id} className="card reveal" key={c.id} style={{ animationDelay: `${i * 0.05}s` }}>
+          <Link
+            to={"/category/" + c.id}
+            className="card reveal"
+            key={c.id}
+            style={{ animationDelay: `${i * 0.05}s` }}
+          >
             <div className="c-icon"><Icon name={c.icon} /></div>
             <h3>{c.name.bn}</h3>
             <p>{c.desc.bn}</p>
@@ -83,7 +98,12 @@ export default function Home() {
       </div>
       <div className="grid cols">
         {popular.map((p, i) => (
-          <Link to="/search?q=" + encodeURIComponent(p.en)} className="card reveal" key={p.en} style={{ animationDelay: `${i * 0.05}s` }}>
+          <Link
+            to={"/search?q=" + encodeURIComponent(p.en)}
+            className="card reveal"
+            key={p.en}
+            style={{ animationDelay: `${i * 0.05}s` }}
+          >
             <div className="c-icon"><Icon name={p.icon} /></div>
             <h3>{p.bn}</h3>
             <p>{p.en} — {p.d}</p>
@@ -97,7 +117,12 @@ export default function Home() {
       </div>
       <div className="grid cols">
         {sims.map((s, i) => (
-          <Link to={s.to} className="card reveal" key={s.en} style={{ animationDelay: `${i * 0.05}s` }}>
+          <Link
+            to={s.to}
+            className="card reveal"
+            key={s.en}
+            style={{ animationDelay: `${i * 0.05}s` }}
+          >
             <div className="c-icon"><Icon name={s.icon} /></div>
             <h3>{s.en}</h3>
             <p>{s.bn}</p>
@@ -111,7 +136,10 @@ export default function Home() {
       <Link to="/p/ai-learning" className="card reveal" style={{ display: "block" }}>
         <div className="c-icon"><Icon name="brain" /></div>
         <h3>{t("nav_aiLearning")}</h3>
-        <p>Concept explanations, formula help, learning plans — secure backend AI arrives in Phase 6. The platform stays fully useful without it.</p>
+        <p>
+          Concept explanations, formula help, learning plans — secure backend AI
+          arrives in Phase 6. The platform stays fully useful without it.
+        </p>
       </Link>
 
       <footer className="footer">
