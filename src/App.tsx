@@ -13,19 +13,22 @@ import Search from "./pages/Search";
 import PhaseView from "./pages/PhaseView";
 import NotFound from "./pages/NotFound";
 
-class ErrorBoundary extends Component<{ children: ReactNode }, { err: boolean }> {
-  state = { err: false };
-  static getDerivedStateFromError() {
-    return { err: true };
+class ErrorBoundary extends Component<{ children: ReactNode }, { err: string | null }> {
+  state = { err: null as string | null };
+  static getDerivedStateFromError(e: any) {
+    return { err: String((e && (e.message || e)) || "Unknown error") };
   }
   render() {
     if (this.state.err) {
       return (
         <div style={{ minHeight: "100vh", display: "grid", placeItems: "center", padding: 24, textAlign: "center" }}>
-          <div>
+          <div style={{ maxWidth: 420 }}>
             <h2 style={{ marginBottom: 10 }}>Something went wrong</h2>
-            <p style={{ color: "#94a3b8", marginBottom: 18 }}>
-              The app crashed while loading. Tap below to try again.
+            <p style={{ color: "#f87171", fontSize: 13, marginBottom: 8, wordBreak: "break-word" }}>
+              {this.state.err}
+            </p>
+            <p style={{ color: "#94a3b8", fontSize: 12, marginBottom: 18 }}>
+              Screenshot this error and send it.
             </p>
             <button
               onClick={() => window.location.reload()}
