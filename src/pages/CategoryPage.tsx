@@ -1,33 +1,51 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useI18n } from "../i18n";
-import { categories, catName, catDesc } from "../data/categories";
+import { getCategory, catName, catDesc } from "../data/categories";
 import Icon from "../components/Icon";
 
-export default function Categories() {
+export default function CategoryPage() {
+  const { slug } = useParams();
   const { t, lang } = useI18n();
+  const cat = getCategory(slug || "");
+
+  if (!cat) {
+    return (
+      <div className="phase-box">
+        <h2>404</h2>
+        <p>Category not found.</p>
+        <Link to="/categories" className="btn btn-ghost" style={{ marginTop: 16 }}>
+          {t("view_all")}
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="page-head reveal">
-        <h2>{t("nav_explore")}</h2>
-        <p>{categories.length} {t("sec_categories")} — {t("topics_soon")}</p>
+        <span className="badge">#{cat.id}</span>
+        <h2 style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 12 }}>
+          <span style={{ color: "var(--primary)" }}><Icon name={cat.icon} size={26} /></span>
+          {catName(cat, lang)}
+        </h2>
+        <p>{cat.name.en} · {cat.name.hi}</p>
+        <p style={{ marginTop: 10 }}>{catDesc(cat, lang)}</p>
       </div>
-      <div className="grid cats">
-        {categories.map((c, i) => (
-          <Link
-            to={"/category/" + c.id}
-            className="card reveal"
-            key={c.id}
-            style={{ animationDelay: `${(i % 8) * 0.04}s` }}
-          >
-            <div className="c-icon"><Icon name={c.icon} /></div>
-            <h3>{catName(c, lang)}</h3>
-            <p>{catDesc(c, lang)}</p>
-            <div className="c-foot">
-              <span className="c-count">{t("topics_count").replace("{n}", String(c.subs.length))}</span>
-              <Icon name="arrow" size={15} />
-            </div>
-          </Link>
-        ))}
+
+      <div className="glass-card reveal" style={{ padding: 22 }}>
+        <h3 style={{ fontSize: 15 }}>{t("subcategories")}</h3>
+        <div className="sub-chips">
+          {cat.subs.map((s) => (
+            <span className="chip" key={s} style={{ color: "var(--text)" }}>{s}</span>
+          ))}
+        </div>
+        <p style={{ color: "var(--muted)", fontSize: 13, marginTop: 18 }}>
+          {t("topics_soon")}
+        </p>
+      </div>
+
+      <div style={{ marginTop: 20 }}>
+        <Link to="/categories" className="link-more">← {t("view_all")}</Link>
       </div>
     </div>
   );
