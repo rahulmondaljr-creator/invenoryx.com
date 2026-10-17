@@ -40,3 +40,9 @@ export const categories: Category[] = [
 ];
 
 export const getCategory = (id: string) => categories.find((c) => c.id === id);
+
+export const catName = (c: Category, lang: string) =>
+  c.name[lang as keyof typeof c.name] ?? c.name.en;
+
+export const catDesc = (c: Category, lang: string) =>
+  (c.desc as Record<string, string>)[lang] ?? c.desc.en;
